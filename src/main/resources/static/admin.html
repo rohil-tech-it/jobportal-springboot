@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - JobPortal</title>
+    <!-- Browser Tab Logo -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body>
+    <!-- Admin Navbar -->
+    <nav class="admin-navbar">
+        <div class="logo">
+            <i class="fas fa-crown"></i>
+            <span>Admin<span class="highlight">Portal</span></span>
+        </div>
+        <div class="nav-links">
+            <span class="nav-link active" onclick="showTab('dashboard')">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </span>
+            <span class="nav-link" onclick="showTab('jobs')">
+                <i class="fas fa-briefcase"></i> Manage Jobs
+            </span>
+            <span class="nav-link" onclick="showTab('applications')">
+                <i class="fas fa-file-alt"></i> Applications
+            </span>
+        </div>
+        <div class="admin-user">
+            <div class="admin-profile">
+                <i class="fas fa-user-shield"></i>
+                <span id="adminName"></span>
+            </div>
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+            <a href="/" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Site
+            </a>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <!-- Dashboard Tab -->
+        <div id="dashboardTab" class="tab-content active">
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <div class="welcome-text">
+                    <h2>Welcome back, <span id="adminWelcomeName">Admin</span>!</h2>
+                    <p>Here's what's happening with your job portal today.</p>
+                </div>
+                <div class="welcome-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span id="currentDate"></span>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Total Jobs</h3>
+                        <div class="stat-number" id="totalJobs">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Active Jobs</h3>
+                        <div class="stat-number" id="activeJobs">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Applications</h3>
+                        <div class="stat-number" id="totalApps">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Candidates</h3>
+                        <div class="stat-number" id="totalCandidates">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                <div class="activity-list" id="activityList">
+                    <div class="activity-item">
+                        <i class="fas fa-spinner fa-pulse"></i>
+                        <span>Loading activities...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Job Form -->
+            <div class="form-card">
+                <h3 class="form-title">
+                    <i class="fas fa-plus-circle"></i> Post New Job
+                </h3>
+                <form id="addJobForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Job Title *</label>
+                            <input type="text" id="jobTitle" placeholder="e.g., Senior Software Engineer" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Company *</label>
+                            <input type="text" id="company" placeholder="e.g., Google, Microsoft" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Job Type *</label>
+                            <select id="jobType" required>
+                                <option value="Full-time">Full-time</option>
+                                <option value="Part-time">Part-time</option>
+                                <option value="Remote">Remote</option>
+                                <option value="Internship">Internship</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Location *</label>
+                            <input type="text" id="location" placeholder="e.g., Chennai, Remote" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Salary *</label>
+                            <input type="text" id="salary" placeholder="e.g., ₹12L - ₹18L per annum" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tags</label>
+                            <input type="text" id="tags" placeholder="React, Java, Python, AWS">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Description</label>
+                            <textarea id="description" rows="3" placeholder="Job description..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Requirements</label>
+                            <textarea id="requirements" rows="3" placeholder="Job requirements..."></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i> Post Job
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Manage Jobs Tab -->
+        <div id="jobsTab" class="tab-content">
+            <div class="form-card">
+                <div class="table-header">
+                    <h3><i class="fas fa-list"></i> All Jobs</h3>
+                    <div class="table-actions">
+                        <input type="text" id="searchJobInput" placeholder="Search jobs..." class="search-input">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Company</th>
+                                <th>Type</th>
+                                <th>Location</th>
+                                <th>Salary</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jobsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Applications Tab -->
+        <div id="applicationsTab" class="tab-content">
+            <div class="form-card">
+                <div class="table-header">
+                    <h3><i class="fas fa-file-alt"></i> Job Applications</h3>
+                    <div class="table-actions">
+                        <select id="filterStatus" class="filter-select" onchange="filterApplications()">
+                            <option value="all">All Status</option>
+                            <option value="Pending">⏳ Pending</option>
+                            <option value="Reviewed">👀 Reviewed</option>
+                            <option value="Shortlisted">⭐ Shortlisted</option>
+                            <option value="Rejected">❌ Rejected</option>
+                            <option value="Hired">✅ Hired</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Applicant</th>
+                                <th>Email</th>
+                                <th>Applied Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Job Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Edit Job</h3>
+                <button class="modal-close" onclick="closeEditModal()">&times;</button>
+            </div>
+            <form id="editJobForm">
+                <input type="hidden" id="editJobId">
+                <div class="form-group">
+                    <label>Job Title</label>
+                    <input type="text" id="editTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Company</label>
+                    <input type="text" id="editCompany" required>
+                </div>
+                <div class="form-group">
+                    <label>Job Type</label>
+                    <select id="editType">
+                        <option value="Full-time">Full-time</option>
+                        <option value="Part-time">Part-time</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Internship">Internship</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="editLocation" required>
+                </div>
+                <div class="form-group">
+                    <label>Salary</label>
+                    <input type="text" id="editSalary" required>
+                </div>
+                <div class="form-group">
+                    <label>Tags</label>
+                    <input type="text" id="editTags">
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn-primary">Update Job</button>
+                    <button type="button" class="btn-secondary" onclick="closeEditModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>
