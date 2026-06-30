@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
-@RestController  // ✅ Added this to enable REST endpoints
+@RestController  //Added this to enable REST endpoints
 public class JobportalApplication {
 
     public static void main(String[] args) {
@@ -18,7 +18,7 @@ public class JobportalApplication {
         System.out.println("🔑 Admin Login: admin / admin123");
     }
 
-    // ✅ Health check endpoint for Railway (MUST HAVE)
+    // Health check endpoint for Railway (MUST HAVE)
     @GetMapping("/api/health")
     public Map<String, String> healthCheck() {
         Map<String, String> response = new HashMap<>();
@@ -28,13 +28,13 @@ public class JobportalApplication {
         return response;
     }
 
-    // ✅ Root endpoint
+    // Root endpoint
     @GetMapping("/")
     public String home() {
         return "JobPortal is running! Visit /api/jobs to see jobs.";
     }
 
-    // ✅ Test endpoint
+    // Test endpoint
     @GetMapping("/api/test")
     public Map<String, String> test() {
         Map<String, String> response = new HashMap<>();
